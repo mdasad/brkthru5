@@ -1,0 +1,50 @@
+<mvc:View controllerName="sap.ui.demo.tdg.view.AddEvent"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:c="sap.ui.core" xmlns="sap.m">
+	<Page class="sapUiFioriObjectPage" title="{i18n>addEventTitle}">
+		<l:Grid defaultSpan="L12 M12 S12" width="auto">
+			<l:content>
+				<f:SimpleForm id="idAddEventForm" minWidth="800"
+					maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
+					labelSpanL="3" labelSpanM="3" emptySpanL="4"
+									emptySpanM="4" columnsL="1" columnsM="1" class="editableForm">
+					<f:content>
+						<!-- Event Form title -->
+						<c:Title text="{i18n>addEventFormHeading}" />
+						<!-- Event title -->
+						<Label text="{i18n>addEventFormTitle}" />
+						<Input value="{newEventModel>/Details/title}" placeholder="{i18n>addEventTitlePlaceholder}" />
+						<!-- Event abstract -->
+						<Label text="{i18n>addEventTextAreaAbstractLabel}" />
+						<TextArea rows="5" value="{newEventModel>/Details/abstract}"
+							placeholder="{i18n>addEventTextAreaAbstractPlaceholder}" />
+						<!-- Event time and location title -->
+						<c:Title text="{i18n>addEventFormTimeLocation}" />
+						<!-- Event Start Date -->
+						<Label text="{i18n>addEventDateTimeStartDateLabel}" />
+						<DateTimeInput type="Date" style="medium"
+							dateValue="{newEventModel>/Details/startDate}"
+							placeholder="{i18n>addEventStartDatePlaceholder}" />
+						<!-- Event End Date -->
+						<Label text="{i18n>addEventDateTimeEndDateLabel}" />
+						<DateTimeInput type="Date" style="medium"
+							dateValue="{newEventModel>/Details/endDate}"
+							placeholder="{i18n>addEventEndDatePlaceholder}" />
+						<!-- Event city -->
+						<Label text="{i18n>addEventFormCityLabel}" />
+						<Input value="{newEventModel>/Details/city}" placeholder="{i18n>addEventFormCityPlaceholder}" />
+					</f:content>
+				</f:SimpleForm>
+			</l:content>
+		</l:Grid>
+		<footer>
+			<Bar>
+				<contentRight>
+					<Button text="{i18n>buttonSubmit}" tooltip="{i18n>addEventButtonSubmitTooltip}" type="Emphasized"
+						press="onSubmit" />
+					<Button text="{i18n>buttonCancel}" tooltip="{i18n>addEventButtonCancelTooltip}" press="onCancel" />
+				</contentRight>
+			</Bar>
+		</footer>
+	</Page>
+</mvc:View>

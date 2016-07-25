@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8">
+    <title>HANA Demo Events Application</title>
+	<!-- based on best practive ui5 TDG application https://sapui5.hana.ondemand.com/sdk/#docs/guide/b4d66ebee72645c1a3501a769e935541.html -->
+	<!-- relative bootstrap url does not work due to insufficient sapui5 version on HANA system : min required sapui5 version is 1.20.7
+	/sap/ui5/1/resources/sap-ui-core.js
+	-->
+    <script id="sap-ui-bootstrap" src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+            data-sap-ui-libs="sap.m"
+            data-sap-ui-theme="sap_bluecrystal"
+            data-sap-ui-xx-bindingSyntax="complex"
+            data-sap-ui-resourceRoots='{
+              "sap.ui.demo.tdg" : "./"
+            }'></script>
+
+    <script>
+        sap.ui.getCore().attachInit(function(){
+            new sap.m.Shell({
+                app: new sap.ui.core.ComponentContainer({
+                    height : '100%',
+                    name: "sap.ui.demo.tdg"
+                })
+            }).placeAt('content');
+        })
+    </script>
+</head>
+<style type="text/css">
+.customBoldText {
+	font-weight: bold;
+	margin-top: 10px;
+}
+.customMarginObjectHeader {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+.customMarginVerticalContent {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+.customNicknameText {
+	text-align: end !important;
+	width: 100%;
+}
+</style>
+<body class="sapUiBody" id="content">
+</body>
+</html>

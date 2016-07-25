@@ -1,0 +1,7 @@
+import = [{
+    table = "myapp.fiori.data::model.event"; 
+    schema = "test"; 
+    file = "myapp.fiori.data.loads:event.csv";
+    header = false;
+    delimField = ";"; 
+}];

@@ -1,0 +1,40 @@
+<mvc:View controllerName="sap.ui.demo.tdg.view.AddComment"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:c="sap.ui.core" xmlns="sap.m">
+	<Page class="sapUiFioriObjectPage" title="{i18n>addCommentTitle}">
+		<l:Grid defaultSpan="L12 M12 S12" width="auto">
+			<l:content>
+				<f:SimpleForm id="idAddCommentForm" minWidth="800"
+					maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
+					labelSpanL="3" labelSpanM="3" emptySpanL="4"
+					emptySpanM="4" columnsL="1" columnsM="1" class="editableForm">
+					<f:content>
+						<!-- Comment Form title -->
+						<c:Title text="{i18n>addCommentFormHeading} '{newCommentModel>/Details/currEventTitle}'" />
+						<Input value="{newCommentModel>/Details/currEventTitle}" editable="false"/>
+						<!-- Event city -->
+						<Label text="{i18n>addCommentNicknameLabel}" />
+						<Input value="{newCommentModel>/Details/nickname}" placeholder="{i18n>addCommentNicknamePlaceholder}" />
+						<!-- Comment text -->
+						<Label text="{i18n>addCommentTextAreaCommentLabel}" />
+						<TextArea placeholder="{i18n>addCommentTextAreaCommentPlaceholder}"
+							value="{newCommentModel>/Details/comment}" rows="5" />
+						<!-- Comment rating -->
+						<Label text="{i18n>addCommentRatingLabel}" />
+						<RatingIndicator maxValue="5"
+							value="{newCommentModel>/Details/rating}" />
+					</f:content>
+				</f:SimpleForm>
+			</l:content>
+		</l:Grid>
+		<footer>
+			<Bar>
+				<contentRight>
+					<Button text="{i18n>buttonSubmit}" tooltip="{i18n>addCommentButtonSubmitTooltip}" type="Emphasized"
+						press="onSubmit" />
+					<Button text="{i18n>buttonCancel}" tooltip="{i18n>addCommentButtonCancelTooltip}" press="onCancel" />
+				</contentRight>
+			</Bar>
+		</footer>
+	</Page>
+</mvc:View>

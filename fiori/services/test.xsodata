@@ -1,0 +1,21 @@
+service {
+	"myapp.fiori.data::model.event" as "Event"
+	navigates ("EventComments" as "CommentsOnEvent", "EventToStatus" as "StatusUpdate")
+	create using "myapp.fiori.procedures::create_update_event";
+
+	"myapp.fiori.data::model.comment" as "Comment"
+	create using "myapp.fiori.procedures::create_comment";
+	
+	"myapp.fiori.data::model.eventStatus" 
+	as "EventStatus" key ("eventId")
+	navigates ("EventStatusComments" as "StatusCommentsOnEvent");
+	
+	association "EventComments" principal "Event"("id") multiplicity "1"
+	dependent "Comment"("onEvent.id") multiplicity "*";
+	
+	association "EventStatusComments" principal "EventStatus"("eventId") multiplicity "1"
+	dependent "Comment"("onEvent.id") multiplicity "*";
+
+	association "EventToStatus" principal "Event" ("id") multiplicity "1" 
+	dependent "EventStatus"("eventId") multiplicity "1";
+}

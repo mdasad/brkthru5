@@ -1,0 +1,60 @@
+namespace myapp.fiori.data;
+@Schema: 'test' 
+context model {
+
+/* CDS Data Types
+  field1 :  Integer       default -42;  
+  field2 :  Integer64     default 9223372036854775807;  
+  field3 :  Decimal(5, 3) default 12.345;  
+  field4 :  BinaryFloat   default 123.456e-1;  
+  field5 :  LocalDate     default date'2013-04-29';  
+  field6 :  LocalTime     default time'17:04:03';  
+  field7 :  UTCDateTime   default timestamp'2013-05-01 01:02:03';  
+  field8 :  UTCTimestamp  default timestamp'2013-05-01 01:02:03';  
+  field9 :  Binary(32)    default x'0102030405060708090a0b0c0d0e0ff1f2f3f4f5f6f7f8f9fafbfcfdfeff';  
+  field10 : String(10)    default 'foo';
+*/
+
+   type XSString: String(40);
+   type SString: String(160); //sms length
+   type LString: String(260);
+
+   Entity event{
+       key id: Integer;
+       title: SString;
+       startDate: LocalDate;
+       endDate: LocalDate;
+       abstract: LString;
+       city: SString;
+   };
+
+   Entity comment{
+        key id: Integer;
+        timestamp: UTCTimestamp;
+        onEvent: Association[1] to event;
+        comment: LString;
+        rating: Integer;
+        nickname: XSString;
+   };
+   
+   View eventStatus as select from comment{
+        onEvent.city as city,
+        onEvent.id as eventId,
+        onEvent.title as eventTitle,
+        onEvent.startDate as eventStartDate,
+        onEvent.endDate as eventEndDate,
+        round(avg(rating),2) as avgRating,
+        count(timestamp) as numberComments
+   } group by onEvent.city, onEvent.id, onEvent.title, onEvent.startDate,
+        onEvent.endDate;
+ 
+     context procedures{
+        type error {
+            HTTP_STATUS_CODE: Integer;
+            ERROR_MESSAGE: SString;
+            DETAIL: LString;
+        };
+    };
+  
+   
+};
