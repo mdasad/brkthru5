@@ -1,0 +1,37 @@
+PROCEDURE 
+    "test"."myapp.fiori.procedures::create_update_event" ( 
+        IN intab "test"."myapp.fiori.data::model.event", 
+        OUT outtab "test"."myapp.fiori.data::model.procedures.error"
+    ) 
+  LANGUAGE SQLSCRIPT
+  SQL SECURITY INVOKER AS             
+  --DEFAULT SCHEMA <schema>
+  --READS SQL DATA AS  
+begin
+
+declare lv_id Int;
+declare lv_title string;
+declare lv_startdate string;
+declare lv_enddate string;
+declare lv_abstract string;
+declare lv_city string;
+declare lv_count int := 0;
+
+declare temp string;
+
+ 
+select  "id", "title", "startDate", "endDate", "abstract", "city"
+    into    lv_id, lv_title, lv_startdate, lv_enddate, lv_abstract, lv_city 
+from :intab;
+
+
+if :lv_title = '' then
+    outtab = select 500 as http_status_code, 
+    'Invalid title ' || lv_title as error_message, 
+    'Title field must not be empty' as detail from dummy;                   
+else
+    insert into "myapp.fiori.data::model.event" ("id", "title", "startDate", "endDate", "abstract", "city")
+        values ("myapp.fiori.data::event".NEXTVAL, lv_title, lv_startdate, lv_enddate, lv_abstract, lv_city);
+end if;
+
+end;

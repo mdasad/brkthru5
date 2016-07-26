@@ -1,0 +1,39 @@
+PROCEDURE 
+    "test"."myapp.fiori.procedures::delete_event" ( 
+        IN intab "test"."myapp.fiori.data::model.event",
+        OUT outtab "test"."myapp.fiori.data::model.procedures.error"
+    ) 
+  LANGUAGE SQLSCRIPT
+  SQL SECURITY INVOKER AS             
+  --DEFAULT SCHEMA <schema>
+  --READS SQL DATA AS  
+begin
+
+declare lv_id string;
+declare lv_count int := 0;
+ 
+select  "id" into lv_id from :intab;
+
+delete from "myapp.fiori.data::model.comment" where "onEvent.id" = :lv_id;
+
+select count(*) into lv_count from "myapp.fiori.data::model.comment"
+where "onEvent.id" = :lv_id;
+
+if :lv_count > 0 then
+  outtab = select 400 as HTTP_STATUS_CODE, 
+               'Error' as ERROR_MESSAGE, 
+                'Nothing done' as DETAIL from dummy;                   
+
+else
+delete from "myapp.fiori.data::model.event" where "id" = :lv_id;
+end if;
+
+select count(*) into lv_count from "myapp.fiori.data::model.event"
+where "id" = :lv_id;
+
+if :lv_count > 0 then
+  outtab = select 400 as HTTP_STATUS_CODE, 
+               'Error' as ERROR_MESSAGE, 
+                'Nothing done' as DETAIL from dummy;                   
+end if;
+end;

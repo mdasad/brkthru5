@@ -1,0 +1,8 @@
+schema = "test";
+start_with = 1;
+maxvalue = 1000000000;
+nomaxvalue = false;
+minvalue= 1;
+nominvalue = true;
+cycles = false;
+depends_on_table = "myapp.fiori.data::model.comment";

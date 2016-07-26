@@ -1,0 +1,40 @@
+PROCEDURE 
+    "test"."myapp.fiori.procedures::create_comment" ( 
+        IN intab "test"."myapp.fiori.data::model.comment", 
+        OUT outtab "test"."myapp.fiori.data::model.procedures.error"
+    ) 
+  LANGUAGE SQLSCRIPT
+  SQL SECURITY INVOKER AS             
+  --DEFAULT SCHEMA <schema>
+  --READS SQL DATA AS  
+begin
+
+declare lv_timestamp string;
+declare lv_event_id string;
+declare lv_comment string;
+declare lv_rating Int;
+declare lv_nickname string;
+declare lv_id Int;
+declare lv_count Int;
+
+select  "onEvent.id", "comment", "rating", "nickname"
+    into    lv_event_id, lv_comment, lv_rating, lv_nickname
+    from :intab;
+
+lv_timestamp := CURRENT_TIMESTAMP;
+
+   insert into "myapp.fiori.data::model.comment"
+        ("id", "timestamp", "onEvent.id", "comment", "rating", "nickname")
+         values ("myapp.fiori.data::comment".NEXTVAL, 
+         lv_timestamp, lv_event_id, lv_comment, lv_rating, lv_nickname);
+
+select count(*) into lv_count from "myapp.fiori.data::model.comment"
+where "timestamp" = :lv_timestamp;
+
+if :lv_count = 0 then
+  outtab = select 400 as HTTP_STATUS_CODE, 
+               'Error' as ERROR_MESSAGE, 
+                'Nothing done' as DETAIL from dummy;                   
+end if;
+
+end;
